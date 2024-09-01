@@ -55,6 +55,7 @@ app.listen(3000, function(){
 })
 
 app.use(express.json());
+
 app.post('/posts', createPost);
 
 app.get('/posts', getAllPostsHandler)
