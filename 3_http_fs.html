@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="get">Get</button>
+    <button id="post">Post</button>
+    <button id="patch">Patch</button>
+    <button id="delete">Delete</button>
+
+    <script>
+        let getBtn = document.querySelector("#get");
+        let postBtn = document.querySelector("#post");
+        let patchBtn = document.querySelector("#patch");
+        let deleteBtn = document.querySelector("#delete");
+        getBtn.addEventListener("click", async function() {
+           const resp = await fetch('https://dummyjson.com/posts',{
+                method: 'GET'
+               })
+            const data = await resp.json();
+            console.log(data); 
+            console.log(resp.ok);                 
+        });
+
+        postBtn.addEventListener("click", async function (){
+            const resp = await fetch('https://dummyjson.com/posts/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title: 'foo',
+                    body: 'bar',
+                    userId: 1
+                })
+            });
+            const data = await resp.json();
+            console.log(data);
+            console.log(resp);
+            
+        })
+
+        patchBtn.addEventListener("click",async function (){
+            try{
+                const resp = await fetch('https://dummyjson.com/posts/1',{
+                method:"PATCH",
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({
+                    title: 'Updated Title',
+                    body: 'This post has been updated',
+                    userId:1
+                })
+            })
+            const data = await resp.json();
+            console.log(data);
+            console.log(resp);
+            }catch(err){
+                console.log(err);
+            }
+            
+        })
+
+        deleteBtn.addEventListener("click", async function(){
+            try{
+                const resp = await fetch('https://dummyjson.com/posts/1',{
+                    method:"DELETE",
+                    headers:{
+                        'Content-Type':'application/json'
+                    }
+                })
+                const data = await resp.json();
+                console.log(data);
+                console.log(resp);
+            }catch(err){
+                console.log(err);
+            }
+        })
+    </script>
+</body>
+</html>
